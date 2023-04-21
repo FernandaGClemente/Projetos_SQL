@@ -1,0 +1,1 @@
+/****** Script dos comandos SQL dos exercicios do site https://datalemur.com/ ******/

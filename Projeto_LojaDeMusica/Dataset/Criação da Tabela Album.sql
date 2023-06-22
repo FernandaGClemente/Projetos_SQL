@@ -1,4 +1,6 @@
-/****** Script do comando SelectTopNRows de SSMS  ******/
+/****** Script dos comandos do SQL para a Criação da Tabela Album ******/
+
+-- Criação da Tabela
 CREATE TABLE [album]
 (
     [album_id] INTEGER PRIMARY KEY NOT NULL,
@@ -7,9 +9,10 @@ CREATE TABLE [album]
     FOREIGN KEY ([artist_id]) REFERENCES [artist] ([artist_id]) 
 		ON DELETE NO ACTION ON UPDATE NO ACTION
 )
-
+-- Consulta de todas as colunas da tabela
 SELECT * FROM [Projeto_SQL_LojaDeMusica].[dbo].[album]
 
+-- Inclusão dos dados
 --INSERT INTO [album] ([album_id],[title],[artist_id]) VALUES
 INSERT INTO [album] VALUES
 (1,'For Those About To Rock We Salute You',1),

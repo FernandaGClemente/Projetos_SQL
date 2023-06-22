@@ -1,4 +1,6 @@
-/****** Script do comando SelectTopNRows de SSMS  ******/
+/****** Script dos comandos do SQL para a Criação da Tabela Cliente ******/
+
+-- Criação da Tabela
 CREATE TABLE [customer]
 (
     [customer_id] INTEGER PRIMARY KEY NOT NULL,
@@ -18,8 +20,10 @@ CREATE TABLE [customer]
 		ON DELETE NO ACTION ON UPDATE NO ACTION
 )
 
+-- Consulta de todas as colunas da tabela
 SELECT * FROM [Projeto_SQL_LojaDeMusica].[dbo].[customer]
 
+-- Inclusão dos dados
 --INSERT INTO [customer] ([customer_id],[first_name],[last_name],[company],[address],[city],[state],[country],[postal_code],[phone],[fax],[email],[support_rep_id]) VALUES
 INSERT INTO [customer] VALUES
 (1,'Lua','Gonaçalves','Embraer - Empresa Brasileira de Aerona¡utica S.A.','Av. Brigadeiro Faria Lima, 2170','Sa£o Josa© dos Campos','SP','Brazil','12227-000','+55 (12) 3923-5555','+55 (12) 3923-5566','luisg@embraer.com.br',3),

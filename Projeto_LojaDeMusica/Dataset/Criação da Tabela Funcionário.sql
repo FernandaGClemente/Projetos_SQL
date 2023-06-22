@@ -1,4 +1,6 @@
-/****** Script do comando SelectTopNRows de SSMS  ******/
+/****** Script dos comandos do SQL para a Criação da Tabela Funcionarios ******/
+
+-- Criação da Tabela
 CREATE TABLE [employee]
 (
     [employee_id] INTEGER PRIMARY KEY NOT NULL,
@@ -19,8 +21,10 @@ CREATE TABLE [employee]
     [email] NVARCHAR(60),
 )
 
+-- Consulta de todas as colunas da tabela
 SELECT * FROM [Projeto_SQL_LojaDeMusica].[dbo].[employee]
 
+-- Inclusão dos dados
 --INSERT INTO [employee] ([employee_id],[last_name],[first_name],[title],[reports_to],[levels],[birthdate],[hire_date],[address],[city],[state],[country],[postal_code],[phone],[fax],[email]) VALUES
 INSERT INTO [employee] VALUES
 (1,'Adams','Andrew','General Manager',9,'L6',1962-02-18 ,2016-08-14 ,'11120 Jasper Ave NW','Edmonton','AB','Canada','T5K 2N1','+1 (780) 428-9482','+1 (780) 428-3457','andrew@chinookcorp.com'),

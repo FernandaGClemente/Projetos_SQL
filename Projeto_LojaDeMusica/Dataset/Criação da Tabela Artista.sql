@@ -1,12 +1,16 @@
-/****** Script do comando SelectTopNRows de SSMS  ******/
+/****** Script dos comandos do SQL para a Criação da Tabela Artista ******/
+
+-- Criação da Tabela
 CREATE TABLE [artist]
 (
     [artist_id] INTEGER PRIMARY KEY NOT NULL,
     [name] NVARCHAR(120)
 )
 
+-- Consulta de todas as colunas da tabela
 SELECT * FROM [Projeto_SQL_LojaDeMusica].[dbo].[artist]
 
+-- Inclusão dos dados
 --INSERT INTO [artist] ([artist_id], [name]) VALUES
 INSERT INTO [artist] VALUES
 (1,'AC/DC'),

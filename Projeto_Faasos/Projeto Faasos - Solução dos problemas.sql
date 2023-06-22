@@ -1,12 +1,29 @@
 /****** Script dos comandos em SQL  ******/
 
+SELECT [IdIngrediantes],[NomeDoIngredientes] FROM [tb_Ingredientes]
+SELECT [IdMotorista],[DataDeRegistro] FROM [tb_Motorista]
+SELECT [IdPedido],[IdMotorista],[HorarioDaColeta],[Distancia],[Duracao],[Cancelamento] FROM tb_OrdemDoMotorista
+SELECT [IdPedido],[IdCliente],[IdRolls],[ItensExtrasNaoIncluidos],[ItensExtrasIncluidos],[DataDoPedido] FROM tb_PedidosDoClientes
+SELECT [IdRolls],[Ingredientes] FROM [tb_ReceitaDeRolls]
+SELECT [IdRolls],[NomeRolls] FROM [tb_Rolls]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 -- 1) Quantos Rolls foram pedidos? >> Resultado: 14 
-SELECT COUNT([IdRolls]) AS 'Quantidade de Pedidos' FROM tb_PedidosDoClientes; 
+
+SELECT 
+	COUNT([IdRolls]) AS 'Quantidade de Pedidos' 
+FROM tb_PedidosDoClientes; 
 
 -- 2) Quantos pedidos únicos de clientes foram feitos? >> Resultado: 5
-SELECT COUNT(DISTINCT [IdCliente]) AS 'Quantidade de Pedidos Únicos' FROM tb_PedidosDoClientes; 
+
+SELECT 
+	COUNT(DISTINCT [IdCliente]) AS 'Quantidade de Pedidos Únicos' 
+FROM tb_PedidosDoClientes; 
 
 -- 3) Quantos pedidos bem-sucedidos foram entregues por cada motorista?
+
 SELECT 
 	[IdMotorista], 
 	COUNT(DISTINCT[IdPedido]) AS 'Pedidos entregues'
@@ -14,42 +31,45 @@ FROM tb_OrdemDoMotorista
 WHERE [Cancelamento] NOT IN ('Cancellation','Customer Cancellation')
 GROUP BY [IdMotorista];
 
--- 4) Quantos Rolls de cada tipo foram entregues?
+-- 4) Quantos Rolls de cada tipo foram entregues? 
+-- a) Criação de uma coluna do StatusDoCancelamento
 
-/**SELECT * FROM tb_OrdemDoMotorista
-WHERE [Cancelamento] NOT IN ('Cancellation','Customer Cancellation')**/
-
-/**SELECT *,
-	(CASE
-		WHEN [Cancelamento] IN ('Cancellation','Customer Cancellation') THEN 'Cancelado'
-		ELSE 'Não cancelado'
-	END) AS StatusDoCancelamento
-FROM tb_OrdemDoMotorista**/
-
-/**SELECT [IdPedido] FROM
-(SELECT *,
-	(CASE
-		WHEN [Cancelamento] IN ('Cancellation','Customer Cancellation') THEN 'Cancelado'
-		ELSE 'Não cancelado'
-	END) AS StatusDoCancelamento
-FROM tb_OrdemDoMotorista) tb_1
-WHERE StatusDoCancelamento = 'Não cancelado'**/
-
-SELECT [IdRolls], COUNT([IdRolls]) AS 'Rolls entregues' 
+SELECT 
+	[IdRolls], 
+	COUNT([IdRolls]) AS 'Rolls entregues' 
 FROM tb_PedidosDoClientes 
-WHERE [IdPedido] IN (SELECT [IdPedido] 
-FROM (SELECT *, (CASE WHEN [Cancelamento] IN ('Cancellation','Customer Cancellation') THEN 'Cancelado' ELSE 'Não cancelado' END) AS StatusDoCancelamento FROM tb_OrdemDoMotorista) tb_1
-WHERE StatusDoCancelamento = 'Não cancelado')
+WHERE [IdPedido] IN ( 
+					SELECT 
+						[IdPedido] 
+					FROM( 
+						SELECT  
+							*, 
+							( 
+							CASE 
+								WHEN [Cancelamento] IN ('Cancellation','Customer Cancellation') THEN 'Cancelado' 
+								ELSE 'Não cancelado' 
+							END
+							) AS StatusDoCancelamento 
+						FROM tb_OrdemDoMotorista
+						) tb_1
+					WHERE StatusDoCancelamento = 'Não cancelado'
+					)
 GROUP BY [IdRolls];
 
 -- 5) Quantos Rolls vegetais e não vegetais foram pedidos por cada cliente?
 
-/**SELECT [IdCliente], [IdRolls], COUNT([IdRolls]) AS Total FROM tb_PedidosDoClientes
-GROUP BY [IdCliente], [IdRolls]**/
-
-SELECT tb_1.[IdCliente], R.[NomeRolls], Total
-FROM (SELECT [IdCliente], [IdRolls], COUNT([IdRolls]) AS Total FROM tb_PedidosDoClientes
-GROUP BY [IdCliente], [IdRolls]) tb_1
+SELECT 
+	tb_1.[IdCliente], 
+	R.[NomeRolls], 
+	Total
+FROM(
+	 SELECT 
+		[IdCliente], 
+		[IdRolls], 
+		COUNT([IdRolls]) AS Total 
+	FROM tb_PedidosDoClientes
+	GROUP BY [IdCliente], [IdRolls]
+	) tb_1
 INNER JOIN tb_Rolls R
 ON tb_1.[IdRolls] = R.[IdRolls];
 
